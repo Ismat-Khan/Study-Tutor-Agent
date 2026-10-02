@@ -1,4 +1,5 @@
 import streamlit as st
+import textwrap
 from pypdf import PdfReader
 
 from agent import ask_tutor
@@ -22,397 +23,398 @@ st.set_page_config(
 # ============================================================
 
 st.markdown(
-    """<style>
-
-/* ========================================================
-GLOBAL
-======================================================== */
-
-.stApp {
-background:
-radial-gradient(
-circle at 10% 10%,
-rgba(0, 229, 255, 0.10),
-transparent 30%
-),
-radial-gradient(
-circle at 90% 20%,
-rgba(76, 0, 255, 0.10),
-transparent 30%
-),
-linear-gradient(
-135deg,
-#050816 0%,
-#081127 50%,
-#050816 100%
-);
+    textwrap.dedent("""
+    <style>
+
+    /* ========================================================
+       GLOBAL
+       ======================================================== */
+
+    .stApp {
+        background:
+            radial-gradient(
+                circle at 10% 10%,
+                rgba(0, 229, 255, 0.10),
+                transparent 30%
+            ),
+            radial-gradient(
+                circle at 90% 20%,
+                rgba(76, 0, 255, 0.10),
+                transparent 30%
+            ),
+            linear-gradient(
+                135deg,
+                #050816 0%,
+                #081127 50%,
+                #050816 100%
+            );
+
+        color: #f5f7ff;
+    }
 
-color: #f5f7ff;
-}
+    /* Main content */
 
-/* Main content */
+    .block-container {
+        max-width: 1200px;
+        padding-top: 2rem;
+        padding-bottom: 5rem;
+    }
 
-.block-container {
-max-width: 1200px;
-padding-top: 2rem;
-padding-bottom: 5rem;
-}
 
+    /* ========================================================
+       HEADER
+       ======================================================== */
+
+    .hero {
+        padding: 28px 30px;
+        margin-bottom: 25px;
+
+        border: 1px solid rgba(0, 229, 255, 0.20);
+        border-radius: 24px;
 
-/* ========================================================
-HEADER
-======================================================== */
+        background:
+            linear-gradient(
+                135deg,
+                rgba(10, 25, 60, 0.90),
+                rgba(10, 15, 35, 0.75)
+            );
 
-.hero {
-padding: 28px 30px;
-margin-bottom: 25px;
+        box-shadow:
+            0 0 40px rgba(0, 229, 255, 0.08),
+            inset 0 1px 0 rgba(255,255,255,0.05);
+    }
 
-border: 1px solid rgba(0, 229, 255, 0.20);
-border-radius: 24px;
+    .hero-badge {
+        display: inline-block;
+
+        padding: 6px 12px;
+        margin-bottom: 12px;
+
+        border-radius: 999px;
 
-background:
-linear-gradient(
-135deg,
-rgba(10, 25, 60, 0.90),
-rgba(10, 15, 35, 0.75)
-);
+        background: rgba(0, 229, 255, 0.10);
+        border: 1px solid rgba(0, 229, 255, 0.30);
+
+        color: #5ee7ff;
+
+        font-size: 13px;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+    }
+
+    .hero-title {
+        font-size: clamp(30px, 5vw, 52px);
+        font-weight: 800;
 
-box-shadow:
-0 0 40px rgba(0, 229, 255, 0.08),
-inset 0 1px 0 rgba(255,255,255,0.05);
-}
+        line-height: 1.05;
 
-.hero-badge {
-display: inline-block;
-
-padding: 6px 12px;
-margin-bottom: 12px;
-
-border-radius: 999px;
+        margin: 0;
 
-background: rgba(0, 229, 255, 0.10);
-border: 1px solid rgba(0, 229, 255, 0.30);
-
-color: #5ee7ff;
+        background:
+            linear-gradient(
+                90deg,
+                #ffffff,
+                #67e8f9,
+                #38bdf8,
+                #a78bfa
+            );
 
-font-size: 13px;
-font-weight: 600;
-letter-spacing: 0.5px;
-}
-
-.hero-title {
-font-size: clamp(30px, 5vw, 52px);
-font-weight: 800;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
 
-line-height: 1.05;
+    .hero-subtitle {
+        color: #a9b5d0;
+        font-size: 16px;
+        margin-top: 12px;
+        margin-bottom: 0;
+    }
 
-margin: 0;
 
-background:
-linear-gradient(
-90deg,
-#ffffff,
-#67e8f9,
-#38bdf8,
-#a78bfa
-);
+    /* ========================================================
+       FEATURE CARDS
+       ======================================================== */
 
--webkit-background-clip: text;
--webkit-text-fill-color: transparent;
-}
+    .feature-card {
+        height: 100%;
 
-.hero-subtitle {
-color: #a9b5d0;
-font-size: 16px;
-margin-top: 12px;
-margin-bottom: 0;
-}
+        padding: 20px;
 
+        border-radius: 18px;
 
-/* ========================================================
-FEATURE CARDS
-======================================================== */
+        background:
+            rgba(12, 24, 52, 0.65);
 
-.feature-card {
-height: 100%;
+        border: 1px solid rgba(120, 160, 255, 0.13);
 
-padding: 20px;
+        box-shadow:
+            0 8px 30px rgba(0,0,0,0.20);
 
-border-radius: 18px;
+        transition: 0.25s ease;
+    }
 
-background:
-rgba(12, 24, 52, 0.65);
+    .feature-card:hover {
+        border-color: rgba(0, 229, 255, 0.35);
 
-border: 1px solid rgba(120, 160, 255, 0.13);
+        box-shadow:
+            0 0 25px rgba(0, 229, 255, 0.10);
+    }
 
-box-shadow:
-0 8px 30px rgba(0,0,0,0.20);
+    .feature-icon {
+        font-size: 27px;
+        margin-bottom: 8px;
+    }
 
-transition: 0.25s ease;
-}
+    .feature-title {
+        font-weight: 700;
+        font-size: 16px;
+        color: #ffffff;
+    }
 
-.feature-card:hover {
-border-color: rgba(0, 229, 255, 0.35);
+    .feature-description {
+        color: #8998b7;
+        font-size: 13px;
+        line-height: 1.5;
+    }
 
-box-shadow:
-0 0 25px rgba(0, 229, 255, 0.10);
-}
 
-.feature-icon {
-font-size: 27px;
-margin-bottom: 8px;
-}
+    /* ========================================================
+       SECTION TITLE
+       ======================================================== */
 
-.feature-title {
-font-weight: 700;
-font-size: 16px;
-color: #ffffff;
-}
+    .section-title {
+        font-size: 21px;
+        font-weight: 750;
+        color: #ffffff;
+        margin-top: 25px;
+        margin-bottom: 12px;
+    }
 
-.feature-description {
-color: #8998b7;
-font-size: 13px;
-line-height: 1.5;
-}
 
+    /* ========================================================
+       CHAT AREA
+       ======================================================== */
 
-/* ========================================================
-SECTION TITLE
-======================================================== */
+    .chat-container {
+        padding: 10px 0;
+    }
 
-.section-title {
-font-size: 21px;
-font-weight: 750;
-color: #ffffff;
-margin-top: 25px;
-margin-bottom: 12px;
-}
+    [data-testid="stChatMessage"] {
+        background: rgba(12, 25, 52, 0.55);
 
+        border: 1px solid rgba(120, 160, 255, 0.10);
 
-/* ========================================================
-CHAT AREA
-======================================================== */
+        border-radius: 18px;
 
-.chat-container {
-padding: 10px 0;
-}
+        margin-bottom: 12px;
 
-[data-testid="stChatMessage"] {
-background: rgba(12, 25, 52, 0.55);
+        padding: 8px;
+    }
 
-border: 1px solid rgba(120, 160, 255, 0.10);
 
-border-radius: 18px;
+    /* ========================================================
+       SIDEBAR
+       ======================================================== */
 
-margin-bottom: 12px;
+    [data-testid="stSidebar"] {
+        background:
+            linear-gradient(
+                180deg,
+                #060b1b 0%,
+                #081127 100%
+            );
 
-padding: 8px;
-}
+        border-right: 1px solid rgba(0, 229, 255, 0.12);
+    }
 
+    [data-testid="stSidebar"] h2 {
+        color: #ffffff;
+    }
 
-/* ========================================================
-SIDEBAR
-======================================================== */
+    .sidebar-logo {
+        text-align: center;
+        padding: 12px 0 22px 0;
+    }
 
-[data-testid="stSidebar"] {
-background:
-linear-gradient(
-180deg,
-#060b1b 0%,
-#081127 100%
-);
+    .sidebar-logo-icon {
+        font-size: 42px;
+    }
 
-border-right: 1px solid rgba(0, 229, 255, 0.12);
-}
+    .sidebar-logo-title {
+        font-size: 20px;
+        font-weight: 800;
 
-[data-testid="stSidebar"] h2 {
-color: #ffffff;
-}
+        background:
+            linear-gradient(
+                90deg,
+                #67e8f9,
+                #818cf8
+            );
 
-.sidebar-logo {
-text-align: center;
-padding: 12px 0 22px 0;
-}
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
 
-.sidebar-logo-icon {
-font-size: 42px;
-}
+    .sidebar-logo-subtitle {
+        color: #71809d;
+        font-size: 12px;
+    }
 
-.sidebar-logo-title {
-font-size: 20px;
-font-weight: 800;
 
-background:
-linear-gradient(
-90deg,
-#67e8f9,
-#818cf8
-);
+    /* ========================================================
+       STATUS CARD
+       ======================================================== */
 
--webkit-background-clip: text;
--webkit-text-fill-color: transparent;
-}
+    .status-card {
+        padding: 15px;
 
-.sidebar-logo-subtitle {
-color: #71809d;
-font-size: 12px;
-}
+        border-radius: 16px;
 
+        background: rgba(8, 20, 43, 0.75);
 
-/* ========================================================
-STATUS CARD
-======================================================== */
+        border: 1px solid rgba(0, 229, 255, 0.12);
 
-.status-card {
-padding: 15px;
+        margin-top: 15px;
+    }
 
-border-radius: 16px;
+    .status-row {
+        display: flex;
+        align-items: center;
+        gap: 9px;
 
-background: rgba(8, 20, 43, 0.75);
+        color: #a9b5d0;
 
-border: 1px solid rgba(0, 229, 255, 0.12);
+        font-size: 13px;
 
-margin-top: 15px;
-}
+        margin: 8px 0;
+    }
 
-.status-row {
-display: flex;
-align-items: center;
-gap: 9px;
+    .status-dot {
+        width: 8px;
+        height: 8px;
 
-color: #a9b5d0;
+        border-radius: 50%;
 
-font-size: 13px;
+        background: #22c55e;
 
-margin: 8px 0;
-}
+        box-shadow:
+            0 0 10px rgba(34, 197, 94, 0.8);
+    }
 
-.status-dot {
-width: 8px;
-height: 8px;
 
-border-radius: 50%;
+    /* ========================================================
+       BUTTONS
+       ======================================================== */
 
-background: #22c55e;
+    .stButton > button {
+        width: 100%;
 
-box-shadow:
-0 0 10px rgba(34, 197, 94, 0.8);
-}
+        border-radius: 12px;
 
+        border: 1px solid rgba(0, 229, 255, 0.25);
 
-/* ========================================================
-BUTTONS
-======================================================== */
+        background:
+            linear-gradient(
+                135deg,
+                rgba(0, 170, 255, 0.15),
+                rgba(88, 80, 255, 0.15)
+            );
 
-.stButton > button {
-width: 100%;
+        color: #dffaff;
 
-border-radius: 12px;
+        font-weight: 650;
 
-border: 1px solid rgba(0, 229, 255, 0.25);
+        min-height: 42px;
 
-background:
-linear-gradient(
-135deg,
-rgba(0, 170, 255, 0.15),
-rgba(88, 80, 255, 0.15)
-);
+        transition: all 0.2s ease;
+    }
 
-color: #dffaff;
+    .stButton > button:hover {
+        border-color: #00e5ff;
 
-font-weight: 650;
+        box-shadow:
+            0 0 18px rgba(0, 229, 255, 0.18);
 
-min-height: 42px;
+        color: #ffffff;
+    }
 
-transition: all 0.2s ease;
-}
 
-.stButton > button:hover {
-border-color: #00e5ff;
+    /* ========================================================
+       FILE UPLOADER
+       ======================================================== */
 
-box-shadow:
-0 0 18px rgba(0, 229, 255, 0.18);
+    [data-testid="stFileUploader"] {
+        background: rgba(8, 20, 43, 0.55);
 
-color: #ffffff;
-}
+        border-radius: 16px;
+    }
 
 
-/* ========================================================
-FILE UPLOADER
-======================================================== */
+    /* ========================================================
+       CHAT INPUT
+       ======================================================== */
 
-[data-testid="stFileUploader"] {
-background: rgba(8, 20, 43, 0.55);
+    [data-testid="stChatInput"] {
+        border-color: rgba(0, 229, 255, 0.25);
+    }
 
-border-radius: 16px;
-}
 
+    /* ========================================================
+       SELECTBOX / INPUTS
+       ======================================================== */
 
-/* ========================================================
-CHAT INPUT
-======================================================== */
+    div[data-baseweb="select"] > div {
+        background: rgba(8, 20, 43, 0.70);
 
-[data-testid="stChatInput"] {
-border-color: rgba(0, 229, 255, 0.25);
-}
+        border-color: rgba(120, 160, 255, 0.18);
 
+        border-radius: 12px;
+    }
 
-/* ========================================================
-SELECTBOX / INPUTS
-======================================================== */
+    input {
+        background: rgba(8, 20, 43, 0.70) !important;
+    }
 
-div[data-baseweb="select"] > div {
-background: rgba(8, 20, 43, 0.70);
 
-border-color: rgba(120, 160, 255, 0.18);
+    /* ========================================================
+       DIVIDER
+       ======================================================== */
 
-border-radius: 12px;
-}
+    hr {
+        border-color: rgba(120, 160, 255, 0.10);
+    }
 
-input {
-background: rgba(8, 20, 43, 0.70) !important;
-}
 
+    /* ========================================================
+       MOBILE
+       ======================================================== */
 
-/* ========================================================
-DIVIDER
-======================================================== */
+    @media (max-width: 768px) {
 
-hr {
-border-color: rgba(120, 160, 255, 0.10);
-}
+        .block-container {
+            padding: 1rem;
+        }
 
+        .hero {
+            padding: 22px;
+            border-radius: 18px;
+        }
 
-/* ========================================================
-MOBILE
-======================================================== */
+        .hero-title {
+            font-size: 34px;
+        }
 
-@media (max-width: 768px) {
+        .hero-subtitle {
+            font-size: 14px;
+        }
 
-.block-container {
-padding: 1rem;
-}
+        .feature-card {
+            margin-bottom: 10px;
+        }
+    }
 
-.hero {
-padding: 22px;
-border-radius: 18px;
-}
-
-.hero-title {
-font-size: 34px;
-}
-
-.hero-subtitle {
-font-size: 14px;
-}
-
-.feature-card {
-margin-bottom: 10px;
-}
-}
-
-</style>
-""",
+    </style>
+    """),
     unsafe_allow_html=True,
 )
 
@@ -438,20 +440,21 @@ if "pdf_name" not in st.session_state:
 with st.sidebar:
 
     st.markdown(
-        """<div class="sidebar-logo">
+        textwrap.dedent("""
+        <div class="sidebar-logo">
 
-<div class="sidebar-logo-icon">🎓</div>
+            <div class="sidebar-logo-icon">🎓</div>
 
-<div class="sidebar-logo-title">
-Study Tutor AI
-</div>
+            <div class="sidebar-logo-title">
+                Study Tutor AI
+            </div>
 
-<div class="sidebar-logo-subtitle">
-Your intelligent study companion
-</div>
+            <div class="sidebar-logo-subtitle">
+                Your intelligent study companion
+            </div>
 
-</div>
-""",
+        </div>
+        """),
         unsafe_allow_html=True,
     )
 
@@ -538,20 +541,21 @@ Your intelligent study companion
     if message_count:
 
         st.markdown(
-            f"""<div class="status-card">
+            textwrap.dedent(f"""
+            <div class="status-card">
 
-<div class="status-row">
-<span class="status-dot"></span>
-{message_count} messages remembered
-</div>
+                <div class="status-row">
+                    <span class="status-dot"></span>
+                    {message_count} messages remembered
+                </div>
 
-<div class="status-row">
-📄 Study material:
-{"Loaded" if st.session_state.study_material else "Not loaded"}
-</div>
+                <div class="status-row">
+                    📄 Study material:
+                    {"Loaded" if st.session_state.study_material else "Not loaded"}
+                </div>
 
-</div>
-""",
+            </div>
+            """),
             unsafe_allow_html=True,
         )
 
@@ -577,24 +581,25 @@ Your intelligent study companion
 # ============================================================
 
 st.markdown(
-    """<div class="hero">
+    textwrap.dedent("""
+    <div class="hero">
 
-<div class="hero-badge">
-✦ AI-POWERED LEARNING
-</div>
+        <div class="hero-badge">
+            ✦ AI-POWERED LEARNING
+        </div>
 
-<h1 class="hero-title">
-Study smarter.<br>
-Understand deeper.
-</h1>
+        <h1 class="hero-title">
+            Study smarter.<br>
+            Understand deeper.
+        </h1>
 
-<p class="hero-subtitle">
-Your personal AI tutor for explanations,
-practice, questions, and learning.
-</p>
+        <p class="hero-subtitle">
+            Your personal AI tutor for explanations,
+            practice, questions, and learning.
+        </p>
 
-</div>
-""",
+    </div>
+    """),
     unsafe_allow_html=True,
 )
 
@@ -608,21 +613,22 @@ col1, col2, col3 = st.columns(3)
 with col1:
 
     st.markdown(
-        """<div class="feature-card">
+        textwrap.dedent("""
+        <div class="feature-card">
 
-<div class="feature-icon">💡</div>
+            <div class="feature-icon">💡</div>
 
-<div class="feature-title">
-Understand Concepts
-</div>
+            <div class="feature-title">
+                Understand Concepts
+            </div>
 
-<div class="feature-description">
-Get difficult topics explained
-in simple, student-friendly language.
-</div>
+            <div class="feature-description">
+                Get difficult topics explained
+                in simple, student-friendly language.
+            </div>
 
-</div>
-""",
+        </div>
+        """),
         unsafe_allow_html=True,
     )
 
@@ -630,21 +636,22 @@ in simple, student-friendly language.
 with col2:
 
     st.markdown(
-        """<div class="feature-card">
+        textwrap.dedent("""
+        <div class="feature-card">
 
-<div class="feature-icon">📚</div>
+            <div class="feature-icon">📚</div>
 
-<div class="feature-title">
-Learn From Your Notes
-</div>
+            <div class="feature-title">
+                Learn From Your Notes
+            </div>
 
-<div class="feature-description">
-Upload your study material and
-ask questions about what you're learning.
-</div>
+            <div class="feature-description">
+                Upload your study material and
+                ask questions about what you're learning.
+            </div>
 
-</div>
-""",
+        </div>
+        """),
         unsafe_allow_html=True,
     )
 
@@ -652,21 +659,22 @@ ask questions about what you're learning.
 with col3:
 
     st.markdown(
-        """<div class="feature-card">
+        textwrap.dedent("""
+        <div class="feature-card">
 
-<div class="feature-icon">🧠</div>
+            <div class="feature-icon">🧠</div>
 
-<div class="feature-title">
-Personalized Tutoring
-</div>
+            <div class="feature-title">
+                Personalized Tutoring
+            </div>
 
-<div class="feature-description">
-Your tutor remembers the current
-conversation and adapts to your level.
-</div>
+            <div class="feature-description">
+                Your tutor remembers the current
+                conversation and adapts to your level.
+            </div>
 
-</div>
-""",
+        </div>
+        """),
         unsafe_allow_html=True,
     )
 
@@ -810,16 +818,17 @@ Preferred teaching style:
 st.markdown("---")
 
 st.markdown(
-    """<div style="
-text-align:center;
-color:#64748b;
-font-size:12px;
-padding:15px;
-">
+    textwrap.dedent("""
+    <div style="
+        text-align:center;
+        color:#64748b;
+        font-size:12px;
+        padding:15px;
+    ">
 
-Study Tutor AI • Powered by CrewAI + Groq
+        Study Tutor AI • Powered by CrewAI + Groq
 
-</div>
-""",
+    </div>
+    """),
     unsafe_allow_html=True,
 )
