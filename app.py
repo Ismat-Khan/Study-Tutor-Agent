@@ -1,4 +1,3 @@
-
 import streamlit as st
 from pypdf import PdfReader
 
@@ -19,682 +18,417 @@ st.set_page_config(
 
 
 # ============================================================
-# CUSTOM CSS — UI ONLY
+# CUSTOM CSS
 # ============================================================
 
 st.markdown(
     """
-<style>
-
-/* ============================================================
-   GLOBAL
-============================================================ */
-
-.stApp {
-    background:
-        radial-gradient(
-            circle at 8% 5%,
-            rgba(0, 229, 255, 0.12),
-            transparent 28%
-        ),
-        radial-gradient(
-            circle at 92% 10%,
-            rgba(124, 58, 237, 0.13),
-            transparent 30%
-        ),
-        radial-gradient(
-            circle at 50% 100%,
-            rgba(14, 165, 233, 0.07),
-            transparent 30%
-        ),
-        linear-gradient(
-            135deg,
-            #030712 0%,
-            #071226 48%,
-            #030712 100%
-        );
-
-    color: #f8fafc;
-}
-
-
-/* ============================================================
-   MAIN CONTAINER
-============================================================ */
-
-.block-container {
-    max-width: 1280px;
-    padding-top: 1.5rem;
-    padding-bottom: 4rem;
-}
-
-
-/* ============================================================
-   SIDEBAR
-============================================================ */
-
-[data-testid="stSidebar"] {
-    background:
-        linear-gradient(
-            180deg,
-            #040817 0%,
-            #071226 55%,
-            #040817 100%
-        );
-
-    border-right: 1px solid rgba(56, 189, 248, 0.14);
-}
-
-[data-testid="stSidebar"] > div:first-child {
-    padding-top: 1.4rem;
-}
-
-
-/* Sidebar logo */
-
-.sidebar-logo {
-    text-align: center;
-    padding: 8px 0 18px 0;
-}
-
-.sidebar-logo-icon {
-    font-size: 44px;
-    margin-bottom: 5px;
-    filter: drop-shadow(0 0 14px rgba(34, 211, 238, 0.45));
-}
-
-.sidebar-logo-title {
-    font-size: 21px;
-    font-weight: 800;
-    letter-spacing: -0.5px;
-
-    background:
-        linear-gradient(
-            90deg,
-            #67e8f9,
-            #60a5fa,
-            #a78bfa
-        );
-
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-.sidebar-logo-subtitle {
-    color: #71809d;
-    font-size: 12px;
-    margin-top: 4px;
-}
-
-
-/* Sidebar headings */
-
-[data-testid="stSidebar"] h3 {
-    color: #dbeafe;
-    font-size: 15px;
-    font-weight: 700;
-}
-
-
-/* ============================================================
-   HERO
-============================================================ */
-
-.hero {
-    position: relative;
-    overflow: hidden;
-
-    padding: 34px 38px;
-    margin-bottom: 24px;
-
-    border-radius: 28px;
-
-    border: 1px solid rgba(103, 232, 249, 0.18);
-
-    background:
-        linear-gradient(
-            135deg,
-            rgba(8, 30, 62, 0.94),
-            rgba(9, 18, 40, 0.88)
-        );
-
-    box-shadow:
-        0 20px 70px rgba(0, 0, 0, 0.30),
-        inset 0 1px 0 rgba(255,255,255,0.06);
-}
-
-.hero::before {
-    content: "";
-    position: absolute;
-
-    width: 220px;
-    height: 220px;
-
-    right: -70px;
-    top: -100px;
-
-    border-radius: 50%;
-
-    background: rgba(34, 211, 238, 0.10);
-
-    filter: blur(5px);
-}
-
-.hero::after {
-    content: "";
-    position: absolute;
-
-    width: 170px;
-    height: 170px;
-
-    left: -90px;
-    bottom: -100px;
-
-    border-radius: 50%;
-
-    background: rgba(139, 92, 246, 0.10);
-}
-
-.hero-content {
-    position: relative;
-    z-index: 2;
-}
-
-.hero-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 7px;
-
-    padding: 7px 13px;
-
-    margin-bottom: 14px;
-
-    border-radius: 999px;
-
-    background: rgba(34, 211, 238, 0.08);
-
-    border: 1px solid rgba(34, 211, 238, 0.25);
-
-    color: #67e8f9;
-
-    font-size: 12px;
-    font-weight: 700;
-
-    letter-spacing: 0.7px;
-}
-
-.hero-title {
-    font-size: clamp(34px, 5vw, 58px);
-    font-weight: 850;
-
-    line-height: 1.02;
-
-    letter-spacing: -2px;
-
-    margin: 0;
-
-    background:
-        linear-gradient(
-            90deg,
-            #ffffff 5%,
-            #bff7ff 35%,
-            #67e8f9 65%,
-            #a78bfa 100%
-        );
-
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-.hero-subtitle {
-    max-width: 720px;
-
-    color: #9fb0ca;
-
-    font-size: 15px;
-
-    line-height: 1.7;
-
-    margin-top: 15px;
-    margin-bottom: 0;
-}
-
-
-/* ============================================================
-   FEATURE CARDS
-============================================================ */
-
-.feature-card {
-    position: relative;
-
-    height: 100%;
-
-    padding: 21px;
-
-    border-radius: 20px;
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(15, 35, 69, 0.72),
-            rgba(8, 19, 40, 0.72)
-        );
-
-    border: 1px solid rgba(148, 163, 184, 0.12);
-
-    box-shadow:
-        0 12px 35px rgba(0, 0, 0, 0.18);
-
-    transition:
-        transform 0.25s ease,
-        border-color 0.25s ease,
-        box-shadow 0.25s ease;
-}
-
-.feature-card:hover {
-    transform: translateY(-3px);
-
-    border-color: rgba(103, 232, 249, 0.28);
-
-    box-shadow:
-        0 18px 40px rgba(0, 0, 0, 0.25),
-        0 0 25px rgba(34, 211, 238, 0.06);
-}
-
-.feature-icon {
-    width: 44px;
-    height: 44px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 13px;
-
-    background: rgba(34, 211, 238, 0.08);
-
-    border: 1px solid rgba(34, 211, 238, 0.15);
-
-    font-size: 23px;
-
-    margin-bottom: 12px;
-}
-
-.feature-title {
-    font-weight: 750;
-    font-size: 15px;
-
-    color: #f8fafc;
-
-    margin-bottom: 5px;
-}
-
-.feature-description {
-    color: #8293b2;
-
-    font-size: 12.5px;
-
-    line-height: 1.55;
-}
-
-
-/* ============================================================
-   SECTION HEADER
-============================================================ */
-
-.section-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    margin-top: 30px;
-    margin-bottom: 12px;
-}
-
-.section-title {
-    font-size: 20px;
-    font-weight: 750;
-
-    color: #f8fafc;
-
-    letter-spacing: -0.3px;
-}
-
-.section-caption {
-    color: #64748b;
-    font-size: 12px;
-}
-
-
-/* ============================================================
-   CHAT PANEL
-============================================================ */
-
-.chat-panel {
-    position: relative;
-
-    min-height: 350px;
-
-    padding: 18px;
-
-    border-radius: 24px;
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(8, 21, 43, 0.78),
-            rgba(5, 13, 29, 0.82)
-        );
-
-    border: 1px solid rgba(103, 232, 249, 0.10);
-
-    box-shadow:
-        0 20px 55px rgba(0, 0, 0, 0.22),
-        inset 0 1px 0 rgba(255,255,255,0.025);
-}
-
-
-/* ============================================================
-   CHAT MESSAGES
-============================================================ */
-
-[data-testid="stChatMessage"] {
-    border-radius: 18px !important;
-
-    margin-bottom: 12px !important;
-
-    padding: 8px 12px !important;
-
-    border: 1px solid rgba(148, 163, 184, 0.08) !important;
-
-    background: rgba(15, 27, 49, 0.60) !important;
-
-    box-shadow: none !important;
-}
-
-
-/* User message */
-
-[data-testid="stChatMessage"]:has([data-testid="chatAvatarIcon-user"]) {
-    background:
-        linear-gradient(
-            135deg,
-            rgba(8, 45, 67, 0.75),
-            rgba(8, 29, 51, 0.75)
-        ) !important;
-
-    border-color: rgba(34, 211, 238, 0.15) !important;
-}
-
-
-/* Assistant message */
-
-[data-testid="stChatMessage"]:has([data-testid="chatAvatarIcon-assistant"]) {
-    background:
-        linear-gradient(
-            135deg,
-            rgba(27, 22, 56, 0.65),
-            rgba(12, 25, 48, 0.72)
-        ) !important;
-
-    border-color: rgba(167, 139, 250, 0.12) !important;
-}
-
-
-/* Message text */
-
-[data-testid="stChatMessage"] p {
-    color: #e2e8f0;
-    line-height: 1.7;
-    font-size: 14px;
-}
-
-
-/* ============================================================
-   CHAT AVATARS
-============================================================ */
-
-[data-testid="chatAvatarIcon-user"] {
-    background: rgba(34, 211, 238, 0.14);
-}
-
-[data-testid="chatAvatarIcon-assistant"] {
-    background: rgba(139, 92, 246, 0.15);
-}
-
-
-/* ============================================================
-   CHAT INPUT
-============================================================ */
-
-[data-testid="stChatInput"] {
-    margin-top: 12px;
-}
-
-[data-testid="stChatInput"] > div {
-    border-radius: 18px !important;
-
-    border: 1px solid rgba(103, 232, 249, 0.20) !important;
-
-    background:
-        rgba(6, 18, 37, 0.92) !important;
-
-    box-shadow:
-        0 0 0 1px rgba(0, 0, 0, 0.12),
-        0 12px 35px rgba(0, 0, 0, 0.22) !important;
-}
-
-[data-testid="stChatInput"] textarea {
-    color: #f8fafc !important;
-
-    font-size: 14px !important;
-}
-
-[data-testid="stChatInput"] textarea::placeholder {
-    color: #64748b !important;
-}
-
-
-/* ============================================================
-   SIDEBAR STATUS CARD
-============================================================ */
-
-.status-card {
-    padding: 16px;
-
-    border-radius: 17px;
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(9, 28, 53, 0.80),
-            rgba(7, 18, 38, 0.80)
-        );
-
-    border: 1px solid rgba(34, 211, 238, 0.12);
-
-    margin-top: 14px;
-}
-
-.status-row {
-    display: flex;
-    align-items: center;
-
-    gap: 9px;
-
-    color: #9fb0ca;
-
-    font-size: 12px;
-
-    margin: 9px 0;
-}
-
-.status-dot {
-    width: 7px;
-    height: 7px;
-
-    border-radius: 50%;
-
-    background: #22c55e;
-
-    box-shadow:
-        0 0 10px rgba(34, 197, 94, 0.75);
-}
-
-
-/* ============================================================
-   SIDEBAR INPUTS
-============================================================ */
-
-div[data-baseweb="select"] > div {
-    background: rgba(7, 20, 40, 0.75) !important;
-
-    border-color: rgba(120, 160, 255, 0.14) !important;
-
-    border-radius: 11px !important;
-}
-
-[data-testid="stFileUploader"] {
-    background: rgba(7, 20, 40, 0.55);
-
-    border-radius: 15px;
-
-    border: 1px solid rgba(120, 160, 255, 0.08);
-}
-
-
-/* ============================================================
-   BUTTONS
-============================================================ */
-
-.stButton > button {
-    width: 100%;
-
-    min-height: 42px;
-
-    border-radius: 12px;
-
-    border: 1px solid rgba(103, 232, 249, 0.17);
-
-    background:
-        linear-gradient(
-            135deg,
-            rgba(14, 165, 233, 0.10),
-            rgba(124, 58, 237, 0.10)
-        );
-
-    color: #dffaff;
-
-    font-weight: 650;
-
-    transition:
-        transform 0.2s ease,
-        border-color 0.2s ease,
-        box-shadow 0.2s ease;
-}
-
-.stButton > button:hover {
-    transform: translateY(-1px);
-
-    border-color: rgba(103, 232, 249, 0.55);
-
-    box-shadow:
-        0 0 20px rgba(34, 211, 238, 0.12);
-
-    color: #ffffff;
-}
-
-
-/* ============================================================
-   DIVIDERS
-============================================================ */
-
-hr {
-    border-color: rgba(148, 163, 184, 0.08) !important;
-}
-
-
-/* ============================================================
-   SCROLLBAR
-============================================================ */
-
-::-webkit-scrollbar {
-    width: 7px;
-}
-
-::-webkit-scrollbar-track {
-    background: #030712;
-}
-
-::-webkit-scrollbar-thumb {
-    background: #1e3a5f;
-    border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: #2563eb;
-}
-
-
-/* ============================================================
-   FOOTER
-============================================================ */
-
-.footer {
-    text-align: center;
-
-    color: #52627d;
-
-    font-size: 11px;
-
-    padding: 20px 0 5px 0;
-}
-
-.footer span {
-    color: #67e8f9;
-}
-
-
-/* ============================================================
-   MOBILE
-============================================================ */
-
-@media (max-width: 768px) {
+    <style>
+
+    /* ========================================================
+       GLOBAL
+    ======================================================== */
+
+    .stApp {
+        background:
+            radial-gradient(
+                circle at 10% 10%,
+                rgba(0, 229, 255, 0.10),
+                transparent 30%
+            ),
+            radial-gradient(
+                circle at 90% 20%,
+                rgba(124, 58, 237, 0.10),
+                transparent 30%
+            ),
+            linear-gradient(
+                135deg,
+                #050816 0%,
+                #081127 50%,
+                #050816 100%
+            );
+
+        color: #f5f7ff;
+    }
 
     .block-container {
-        padding: 1rem;
+        max-width: 1200px;
+        padding-top: 2rem;
+        padding-bottom: 5rem;
     }
 
-    .hero {
-        padding: 25px 22px;
-        border-radius: 21px;
+
+    /* ========================================================
+       TEXT
+    ======================================================== */
+
+    h1, h2, h3, h4, h5, h6 {
+        color: #f8fafc !important;
     }
 
-    .hero-title {
-        font-size: 36px;
-        letter-spacing: -1.5px;
+    p, label {
+        color: #cbd5e1;
     }
 
-    .hero-subtitle {
+    [data-testid="stCaptionContainer"] {
+        color: #94a3b8;
+    }
+
+
+    /* ========================================================
+       SIDEBAR
+    ======================================================== */
+
+    [data-testid="stSidebar"] {
+        background:
+            linear-gradient(
+                180deg,
+                #060b1b 0%,
+                #081127 100%
+            );
+
+        border-right: 1px solid rgba(0, 229, 255, 0.12);
+    }
+
+    [data-testid="stSidebar"] h3 {
+        color: #f8fafc !important;
+        margin-top: 8px;
+    }
+
+    .sidebar-brand {
+        text-align: center;
+        padding: 8px 0 18px 0;
+    }
+
+    .sidebar-brand-icon {
+        font-size: 42px;
+        margin-bottom: 5px;
+    }
+
+    .sidebar-brand-title {
+        font-size: 21px;
+        font-weight: 800;
+        color: #67e8f9;
+    }
+
+    .sidebar-brand-subtitle {
+        font-size: 12px;
+        color: #7f8daa;
+        margin-top: 3px;
+    }
+
+
+    /* ========================================================
+       SIDEBAR STATUS
+    ======================================================== */
+
+    .status-box {
+        padding: 14px;
+        border-radius: 15px;
+
+        background:
+            linear-gradient(
+                135deg,
+                rgba(0, 229, 255, 0.07),
+                rgba(99, 102, 241, 0.07)
+            );
+
+        border: 1px solid rgba(103, 232, 249, 0.15);
+
+        margin: 10px 0 14px 0;
+    }
+
+    .status-line {
         font-size: 13px;
+        color: #b8c4dc;
+        padding: 4px 0;
     }
 
-    .feature-card {
+
+    /* ========================================================
+       HERO CONTAINER
+    ======================================================== */
+
+    [data-testid="stVerticalBlockBorderWrapper"] {
+        border-color: rgba(103, 232, 249, 0.15) !important;
+        border-radius: 22px !important;
+        background:
+            linear-gradient(
+                135deg,
+                rgba(10, 25, 60, 0.78),
+                rgba(10, 15, 35, 0.65)
+            ) !important;
+
+        box-shadow:
+            0 12px 45px rgba(0, 0, 0, 0.20),
+            inset 0 1px 0 rgba(255, 255, 255, 0.03);
+    }
+
+
+    /* ========================================================
+       HERO
+    ======================================================== */
+
+    .hero-badge-text {
+        display: inline-block;
+        padding: 6px 12px;
+        border-radius: 999px;
+
+        background: rgba(0, 229, 255, 0.08);
+        border: 1px solid rgba(0, 229, 255, 0.22);
+
+        color: #67e8f9;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.8px;
+    }
+
+    .hero-description {
+        color: #9eacc7;
+        font-size: 16px;
+        line-height: 1.7;
+        max-width: 700px;
+    }
+
+    .hero-title-text {
+        font-size: clamp(32px, 5vw, 54px);
+        font-weight: 850;
+        line-height: 1.05;
+        margin: 10px 0 8px 0;
+
+        background:
+            linear-gradient(
+                90deg,
+                #ffffff,
+                #67e8f9,
+                #38bdf8,
+                #a78bfa
+            );
+
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+
+    /* ========================================================
+       FEATURE CARDS
+    ======================================================== */
+
+    .feature-icon {
+        font-size: 32px;
+        margin-bottom: 8px;
+    }
+
+    .feature-title {
+        font-size: 17px;
+        font-weight: 750;
+        color: #ffffff;
+        margin-bottom: 5px;
+    }
+
+    .feature-text {
+        font-size: 13px;
+        line-height: 1.55;
+        color: #8fa0bd;
+    }
+
+
+    /* ========================================================
+       SECTION HEADER
+    ======================================================== */
+
+    .section-header {
+        margin-top: 30px;
+        margin-bottom: 5px;
+    }
+
+    .section-header-title {
+        font-size: 24px;
+        font-weight: 800;
+        color: #ffffff;
+    }
+
+    .section-header-subtitle {
+        font-size: 13px;
+        color: #8190ad;
+        margin-top: 3px;
+    }
+
+
+    /* ========================================================
+       CHAT AREA
+    ======================================================== */
+
+    [data-testid="stChatMessage"] {
+        border-radius: 18px !important;
+
+        border: 1px solid rgba(120, 160, 255, 0.10) !important;
+
+        background:
+            linear-gradient(
+                135deg,
+                rgba(12, 25, 52, 0.72),
+                rgba(8, 18, 40, 0.60)
+            ) !important;
+
+        margin-bottom: 12px !important;
+
+        box-shadow:
+            0 8px 25px rgba(0, 0, 0, 0.12);
+    }
+
+    [data-testid="stChatMessage"] p {
+        color: #dbe5f5;
+        line-height: 1.7;
+    }
+
+    [data-testid="stChatMessage"] code {
+        border-radius: 8px;
+    }
+
+
+    /* ========================================================
+       EMPTY CHAT STATE
+    ======================================================== */
+
+    .empty-chat {
+        text-align: center;
+        padding: 35px 20px;
+    }
+
+    .empty-chat-icon {
+        font-size: 45px;
         margin-bottom: 10px;
     }
 
-    .chat-panel {
-        padding: 10px;
-        border-radius: 19px;
+    .empty-chat-title {
+        font-size: 20px;
+        font-weight: 750;
+        color: #ffffff;
     }
 
-    [data-testid="stChatMessage"] {
-        padding: 7px !important;
+    .empty-chat-text {
+        color: #8494b2;
+        font-size: 14px;
+        max-width: 500px;
+        margin: 6px auto 0 auto;
+        line-height: 1.6;
     }
-}
 
-</style>
-""",
+
+    /* ========================================================
+       BUTTONS
+    ======================================================== */
+
+    .stButton > button {
+        width: 100%;
+        min-height: 42px;
+
+        border-radius: 12px;
+
+        border: 1px solid rgba(103, 232, 249, 0.20);
+
+        background:
+            linear-gradient(
+                135deg,
+                rgba(0, 170, 255, 0.10),
+                rgba(88, 80, 255, 0.10)
+            );
+
+        color: #dffaff;
+
+        font-weight: 650;
+
+        transition: all 0.2s ease;
+    }
+
+    .stButton > button:hover {
+        border-color: #67e8f9;
+
+        box-shadow:
+            0 0 18px rgba(0, 229, 255, 0.16);
+
+        color: #ffffff;
+    }
+
+
+    /* ========================================================
+       FILE UPLOADER
+    ======================================================== */
+
+    [data-testid="stFileUploader"] {
+        background: rgba(8, 20, 43, 0.45);
+        border-radius: 14px;
+    }
+
+
+    /* ========================================================
+       SELECT BOX
+    ======================================================== */
+
+    div[data-baseweb="select"] > div {
+        background: rgba(8, 20, 43, 0.72) !important;
+
+        border-color: rgba(120, 160, 255, 0.18) !important;
+
+        border-radius: 12px !important;
+    }
+
+
+    /* ========================================================
+       CHAT INPUT
+    ======================================================== */
+
+    [data-testid="stChatInput"] {
+        border-color: rgba(103, 232, 249, 0.22);
+    }
+
+
+    /* ========================================================
+       EXPANDER
+    ======================================================== */
+
+    [data-testid="stExpander"] {
+        border-radius: 12px;
+        border-color: rgba(120, 160, 255, 0.14);
+        background: rgba(8, 18, 40, 0.45);
+    }
+
+
+    /* ========================================================
+       DIVIDER
+    ======================================================== */
+
+    hr {
+        border-color: rgba(120, 160, 255, 0.10);
+    }
+
+
+    /* ========================================================
+       MOBILE
+    ======================================================== */
+
+    @media (max-width: 768px) {
+
+        .block-container {
+            padding: 1rem;
+        }
+
+        .hero-title-text {
+            font-size: 34px;
+        }
+
+        .hero-description {
+            font-size: 14px;
+        }
+
+        .section-header-title {
+            font-size: 21px;
+        }
+    }
+
+    </style>
+    """,
     unsafe_allow_html=True,
 )
 
@@ -719,26 +453,28 @@ if "pdf_name" not in st.session_state:
 
 with st.sidebar:
 
+    # --------------------------------------------------------
+    # BRAND
+    # --------------------------------------------------------
+
     st.markdown(
         """
-        <div class="sidebar-logo">
-
-            <div class="sidebar-logo-icon">🎓</div>
-
-            <div class="sidebar-logo-title">
-                Study Tutor AI
-            </div>
-
-            <div class="sidebar-logo-subtitle">
+        <div class="sidebar-brand">
+            <div class="sidebar-brand-icon">🎓</div>
+            <div class="sidebar-brand-title">Study Tutor AI</div>
+            <div class="sidebar-brand-subtitle">
                 Your intelligent study companion
             </div>
-
         </div>
         """,
         unsafe_allow_html=True,
     )
 
-    st.markdown("---")
+    st.divider()
+
+    # --------------------------------------------------------
+    # STUDY MATERIAL
+    # --------------------------------------------------------
 
     st.markdown("### 📚 Study Material")
 
@@ -785,8 +521,11 @@ with st.sidebar:
             "to let your tutor study with you."
         )
 
+    st.divider()
 
-    st.markdown("---")
+    # --------------------------------------------------------
+    # TUTOR SETTINGS
+    # --------------------------------------------------------
 
     st.markdown("### ⚙️ Tutor Settings")
 
@@ -809,8 +548,11 @@ with st.sidebar:
         ],
     )
 
+    st.divider()
 
-    st.markdown("---")
+    # --------------------------------------------------------
+    # SESSION MEMORY
+    # --------------------------------------------------------
 
     st.markdown("### 🧠 Session Memory")
 
@@ -820,20 +562,21 @@ with st.sidebar:
 
     if message_count:
 
+        material_status = (
+            "Loaded"
+            if st.session_state.study_material
+            else "Not loaded"
+        )
+
         st.markdown(
             f"""
-            <div class="status-card">
-
-                <div class="status-row">
-                    <span class="status-dot"></span>
-                    {message_count} messages remembered
+            <div class="status-box">
+                <div class="status-line">
+                    🟢 {message_count} messages remembered
                 </div>
-
-                <div class="status-row">
-                    📄 Study material:
-                    {"Loaded" if st.session_state.study_material else "Not loaded"}
+                <div class="status-line">
+                    📄 Study material: {material_status}
                 </div>
-
             </div>
             """,
             unsafe_allow_html=True,
@@ -846,10 +589,10 @@ with st.sidebar:
             "during this study session."
         )
 
-
-    st.markdown("")
-
-    if st.button("🗑️ Clear Conversation"):
+    if st.button(
+        "🗑️ Clear Conversation",
+        use_container_width=True,
+    ):
 
         st.session_state.memory = []
 
@@ -860,127 +603,130 @@ with st.sidebar:
 # HERO
 # ============================================================
 
-st.markdown(
-    """
-    <div class="hero">
+with st.container(border=True):
 
-        <div class="hero-content">
+    st.markdown(
+        '<div class="hero-badge-text">✦ AI-POWERED LEARNING</div>',
+        unsafe_allow_html=True,
+    )
 
-            <div class="hero-badge">
-                ✦ AI-POWERED LEARNING
-            </div>
-
-            <h1 class="hero-title">
-                Study smarter.<br>
-                Understand deeper.
-            </h1>
-
-            <p class="hero-subtitle">
-                Your personal AI tutor for explanations,
-                practice, questions, and learning.
-                Upload your notes, ask questions,
-                and learn at your own pace.
-            </p>
-
+    st.markdown(
+        """
+        <div class="hero-title-text">
+            Study smarter.<br>
+            Understand deeper.
         </div>
+        """,
+        unsafe_allow_html=True,
+    )
 
-    </div>
-    """,
-    unsafe_allow_html=True,
-)
+    st.markdown(
+        """
+        <div class="hero-description">
+            Your personal AI tutor for explanations, practice,
+            questions, and learning — powered by CrewAI and Groq.
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
 
 
 # ============================================================
 # FEATURE CARDS
 # ============================================================
 
+st.write("")
+
 col1, col2, col3 = st.columns(3)
 
 with col1:
 
-    st.markdown(
-        """
-        <div class="feature-card">
+    with st.container(border=True):
 
-            <div class="feature-icon">💡</div>
+        st.markdown(
+            '<div class="feature-icon">💡</div>',
+            unsafe_allow_html=True,
+        )
 
-            <div class="feature-title">
-                Understand Concepts
+        st.markdown(
+            '<div class="feature-title">Understand Concepts</div>',
+            unsafe_allow_html=True,
+        )
+
+        st.markdown(
+            """
+            <div class="feature-text">
+                Get difficult topics explained in simple,
+                student-friendly language.
             </div>
-
-            <div class="feature-description">
-                Get difficult topics explained
-                in simple, student-friendly language.
-            </div>
-
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
+            """,
+            unsafe_allow_html=True,
+        )
 
 
 with col2:
 
-    st.markdown(
-        """
-        <div class="feature-card">
+    with st.container(border=True):
 
-            <div class="feature-icon">📚</div>
+        st.markdown(
+            '<div class="feature-icon">📚</div>',
+            unsafe_allow_html=True,
+        )
 
-            <div class="feature-title">
-                Learn From Your Notes
+        st.markdown(
+            '<div class="feature-title">Learn From Your Notes</div>',
+            unsafe_allow_html=True,
+        )
+
+        st.markdown(
+            """
+            <div class="feature-text">
+                Upload your study material and ask questions
+                about what you're learning.
             </div>
-
-            <div class="feature-description">
-                Upload your study material and
-                ask questions about what you're learning.
-            </div>
-
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
+            """,
+            unsafe_allow_html=True,
+        )
 
 
 with col3:
 
-    st.markdown(
-        """
-        <div class="feature-card">
+    with st.container(border=True):
 
-            <div class="feature-icon">🧠</div>
+        st.markdown(
+            '<div class="feature-icon">🧠</div>',
+            unsafe_allow_html=True,
+        )
 
-            <div class="feature-title">
-                Personalized Tutoring
+        st.markdown(
+            '<div class="feature-title">Personalized Tutoring</div>',
+            unsafe_allow_html=True,
+        )
+
+        st.markdown(
+            """
+            <div class="feature-text">
+                Your tutor remembers the current conversation
+                and adapts to your learning level.
             </div>
-
-            <div class="feature-description">
-                Your tutor remembers the current
-                conversation and adapts to your level.
-            </div>
-
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
+            """,
+            unsafe_allow_html=True,
+        )
 
 
 # ============================================================
-# CHAT SECTION
+# CHAT SECTION HEADER
 # ============================================================
 
 st.markdown(
     """
     <div class="section-header">
-
-        <div class="section-title">
+        <div class="section-header-title">
             💬 Ask Your Tutor
         </div>
-
-        <div class="section-caption">
-            AI-powered learning workspace
+        <div class="section-header-subtitle">
+            Ask questions, explore concepts, and learn step by step.
         </div>
-
     </div>
     """,
     unsafe_allow_html=True,
@@ -988,34 +734,43 @@ st.markdown(
 
 
 # ============================================================
-# CHAT PANEL
+# QUESTION & ANSWER BLOCK
 # ============================================================
 
-st.markdown(
-    '<div class="chat-panel">',
-    unsafe_allow_html=True,
-)
+with st.container(border=True):
 
-
-# ============================================================
-# DISPLAY PREVIOUS MESSAGES
-# ============================================================
-
-for message in st.session_state.memory:
-
-    with st.chat_message(
-        message["role"]
-    ):
+    if not st.session_state.memory:
 
         st.markdown(
-            message["content"]
+            """
+            <div class="empty-chat">
+                <div class="empty-chat-icon">🎓</div>
+
+                <div class="empty-chat-title">
+                    Ready when you are
+                </div>
+
+                <div class="empty-chat-text">
+                    Ask your first question below.
+                    Your tutor can explain concepts, work through
+                    problems, and use your uploaded study material.
+                </div>
+            </div>
+            """,
+            unsafe_allow_html=True,
         )
 
+    else:
 
-st.markdown(
-    "</div>",
-    unsafe_allow_html=True,
-)
+        for message in st.session_state.memory:
+
+            with st.chat_message(
+                message["role"]
+            ):
+
+                st.markdown(
+                    message["content"]
+                )
 
 
 # ============================================================
@@ -1066,7 +821,6 @@ Preferred teaching style:
 {response_style}
 
 """
-
 
     enhanced_question = (
         tutor_context
@@ -1132,17 +886,8 @@ Preferred teaching style:
 # FOOTER
 # ============================================================
 
-st.markdown("---")
+st.divider()
 
-st.markdown(
-    """
-    <div class="footer">
-        Study Tutor AI
-        <span>•</span>
-        Powered by CrewAI + Groq
-        <span>•</span>
-        Learn. Practice. Understand.
-    </div>
-    """,
-    unsafe_allow_html=True,
+st.caption(
+    "🎓 Study Tutor AI  •  Powered by CrewAI + Groq"
 )
