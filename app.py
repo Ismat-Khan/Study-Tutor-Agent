@@ -991,12 +991,6 @@ st.markdown(
 # CHAT PANEL
 # ============================================================
 
-st.markdown(
-    '<div class="chat-panel">',
-    unsafe_allow_html=True,
-)
-
-
 # ============================================================
 # DISPLAY PREVIOUS MESSAGES
 # ============================================================
@@ -1010,12 +1004,6 @@ for message in st.session_state.memory:
         st.markdown(
             message["content"]
         )
-
-
-st.markdown(
-    "</div>",
-    unsafe_allow_html=True,
-)
 
 
 # ============================================================
