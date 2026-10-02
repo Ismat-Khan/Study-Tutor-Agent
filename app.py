@@ -1,4 +1,3 @@
-
 import streamlit as st
 from pypdf import PdfReader
 
@@ -23,398 +22,397 @@ st.set_page_config(
 # ============================================================
 
 st.markdown(
-    """
-    <style>
-
-    /* ========================================================
-       GLOBAL
-       ======================================================== */
-
-    .stApp {
-        background:
-            radial-gradient(
-                circle at 10% 10%,
-                rgba(0, 229, 255, 0.10),
-                transparent 30%
-            ),
-            radial-gradient(
-                circle at 90% 20%,
-                rgba(76, 0, 255, 0.10),
-                transparent 30%
-            ),
-            linear-gradient(
-                135deg,
-                #050816 0%,
-                #081127 50%,
-                #050816 100%
-            );
-
-        color: #f5f7ff;
-    }
+    """<style>
+
+/* ========================================================
+GLOBAL
+======================================================== */
+
+.stApp {
+background:
+radial-gradient(
+circle at 10% 10%,
+rgba(0, 229, 255, 0.10),
+transparent 30%
+),
+radial-gradient(
+circle at 90% 20%,
+rgba(76, 0, 255, 0.10),
+transparent 30%
+),
+linear-gradient(
+135deg,
+#050816 0%,
+#081127 50%,
+#050816 100%
+);
 
-    /* Main content */
+color: #f5f7ff;
+}
 
-    .block-container {
-        max-width: 1200px;
-        padding-top: 2rem;
-        padding-bottom: 5rem;
-    }
+/* Main content */
 
+.block-container {
+max-width: 1200px;
+padding-top: 2rem;
+padding-bottom: 5rem;
+}
 
-    /* ========================================================
-       HEADER
-       ======================================================== */
-
-    .hero {
-        padding: 28px 30px;
-        margin-bottom: 25px;
-
-        border: 1px solid rgba(0, 229, 255, 0.20);
-        border-radius: 24px;
 
-        background:
-            linear-gradient(
-                135deg,
-                rgba(10, 25, 60, 0.90),
-                rgba(10, 15, 35, 0.75)
-            );
+/* ========================================================
+HEADER
+======================================================== */
 
-        box-shadow:
-            0 0 40px rgba(0, 229, 255, 0.08),
-            inset 0 1px 0 rgba(255,255,255,0.05);
-    }
+.hero {
+padding: 28px 30px;
+margin-bottom: 25px;
 
-    .hero-badge {
-        display: inline-block;
-
-        padding: 6px 12px;
-        margin-bottom: 12px;
-
-        border-radius: 999px;
+border: 1px solid rgba(0, 229, 255, 0.20);
+border-radius: 24px;
 
-        background: rgba(0, 229, 255, 0.10);
-        border: 1px solid rgba(0, 229, 255, 0.30);
-
-        color: #5ee7ff;
-
-        font-size: 13px;
-        font-weight: 600;
-        letter-spacing: 0.5px;
-    }
-
-    .hero-title {
-        font-size: clamp(30px, 5vw, 52px);
-        font-weight: 800;
+background:
+linear-gradient(
+135deg,
+rgba(10, 25, 60, 0.90),
+rgba(10, 15, 35, 0.75)
+);
 
-        line-height: 1.05;
+box-shadow:
+0 0 40px rgba(0, 229, 255, 0.08),
+inset 0 1px 0 rgba(255,255,255,0.05);
+}
 
-        margin: 0;
+.hero-badge {
+display: inline-block;
+
+padding: 6px 12px;
+margin-bottom: 12px;
+
+border-radius: 999px;
 
-        background:
-            linear-gradient(
-                90deg,
-                #ffffff,
-                #67e8f9,
-                #38bdf8,
-                #a78bfa
-            );
+background: rgba(0, 229, 255, 0.10);
+border: 1px solid rgba(0, 229, 255, 0.30);
+
+color: #5ee7ff;
 
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-    }
+font-size: 13px;
+font-weight: 600;
+letter-spacing: 0.5px;
+}
+
+.hero-title {
+font-size: clamp(30px, 5vw, 52px);
+font-weight: 800;
 
-    .hero-subtitle {
-        color: #a9b5d0;
-        font-size: 16px;
-        margin-top: 12px;
-        margin-bottom: 0;
-    }
+line-height: 1.05;
 
+margin: 0;
 
-    /* ========================================================
-       FEATURE CARDS
-       ======================================================== */
+background:
+linear-gradient(
+90deg,
+#ffffff,
+#67e8f9,
+#38bdf8,
+#a78bfa
+);
 
-    .feature-card {
-        height: 100%;
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+}
 
-        padding: 20px;
+.hero-subtitle {
+color: #a9b5d0;
+font-size: 16px;
+margin-top: 12px;
+margin-bottom: 0;
+}
 
-        border-radius: 18px;
 
-        background:
-            rgba(12, 24, 52, 0.65);
+/* ========================================================
+FEATURE CARDS
+======================================================== */
 
-        border: 1px solid rgba(120, 160, 255, 0.13);
+.feature-card {
+height: 100%;
 
-        box-shadow:
-            0 8px 30px rgba(0,0,0,0.20);
+padding: 20px;
 
-        transition: 0.25s ease;
-    }
+border-radius: 18px;
 
-    .feature-card:hover {
-        border-color: rgba(0, 229, 255, 0.35);
+background:
+rgba(12, 24, 52, 0.65);
 
-        box-shadow:
-            0 0 25px rgba(0, 229, 255, 0.10);
-    }
+border: 1px solid rgba(120, 160, 255, 0.13);
 
-    .feature-icon {
-        font-size: 27px;
-        margin-bottom: 8px;
-    }
+box-shadow:
+0 8px 30px rgba(0,0,0,0.20);
 
-    .feature-title {
-        font-weight: 700;
-        font-size: 16px;
-        color: #ffffff;
-    }
+transition: 0.25s ease;
+}
 
-    .feature-description {
-        color: #8998b7;
-        font-size: 13px;
-        line-height: 1.5;
-    }
+.feature-card:hover {
+border-color: rgba(0, 229, 255, 0.35);
 
+box-shadow:
+0 0 25px rgba(0, 229, 255, 0.10);
+}
 
-    /* ========================================================
-       SECTION TITLE
-       ======================================================== */
+.feature-icon {
+font-size: 27px;
+margin-bottom: 8px;
+}
 
-    .section-title {
-        font-size: 21px;
-        font-weight: 750;
-        color: #ffffff;
-        margin-top: 25px;
-        margin-bottom: 12px;
-    }
+.feature-title {
+font-weight: 700;
+font-size: 16px;
+color: #ffffff;
+}
 
+.feature-description {
+color: #8998b7;
+font-size: 13px;
+line-height: 1.5;
+}
 
-    /* ========================================================
-       CHAT AREA
-       ======================================================== */
 
-    .chat-container {
-        padding: 10px 0;
-    }
+/* ========================================================
+SECTION TITLE
+======================================================== */
 
-    [data-testid="stChatMessage"] {
-        background: rgba(12, 25, 52, 0.55);
+.section-title {
+font-size: 21px;
+font-weight: 750;
+color: #ffffff;
+margin-top: 25px;
+margin-bottom: 12px;
+}
 
-        border: 1px solid rgba(120, 160, 255, 0.10);
 
-        border-radius: 18px;
+/* ========================================================
+CHAT AREA
+======================================================== */
 
-        margin-bottom: 12px;
+.chat-container {
+padding: 10px 0;
+}
 
-        padding: 8px;
-    }
+[data-testid="stChatMessage"] {
+background: rgba(12, 25, 52, 0.55);
 
+border: 1px solid rgba(120, 160, 255, 0.10);
 
-    /* ========================================================
-       SIDEBAR
-       ======================================================== */
+border-radius: 18px;
 
-    [data-testid="stSidebar"] {
-        background:
-            linear-gradient(
-                180deg,
-                #060b1b 0%,
-                #081127 100%
-            );
+margin-bottom: 12px;
 
-        border-right: 1px solid rgba(0, 229, 255, 0.12);
-    }
+padding: 8px;
+}
 
-    [data-testid="stSidebar"] h2 {
-        color: #ffffff;
-    }
 
-    .sidebar-logo {
-        text-align: center;
-        padding: 12px 0 22px 0;
-    }
+/* ========================================================
+SIDEBAR
+======================================================== */
 
-    .sidebar-logo-icon {
-        font-size: 42px;
-    }
+[data-testid="stSidebar"] {
+background:
+linear-gradient(
+180deg,
+#060b1b 0%,
+#081127 100%
+);
 
-    .sidebar-logo-title {
-        font-size: 20px;
-        font-weight: 800;
+border-right: 1px solid rgba(0, 229, 255, 0.12);
+}
 
-        background:
-            linear-gradient(
-                90deg,
-                #67e8f9,
-                #818cf8
-            );
+[data-testid="stSidebar"] h2 {
+color: #ffffff;
+}
 
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-    }
+.sidebar-logo {
+text-align: center;
+padding: 12px 0 22px 0;
+}
 
-    .sidebar-logo-subtitle {
-        color: #71809d;
-        font-size: 12px;
-    }
+.sidebar-logo-icon {
+font-size: 42px;
+}
 
+.sidebar-logo-title {
+font-size: 20px;
+font-weight: 800;
 
-    /* ========================================================
-       STATUS CARD
-       ======================================================== */
+background:
+linear-gradient(
+90deg,
+#67e8f9,
+#818cf8
+);
 
-    .status-card {
-        padding: 15px;
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+}
 
-        border-radius: 16px;
+.sidebar-logo-subtitle {
+color: #71809d;
+font-size: 12px;
+}
 
-        background: rgba(8, 20, 43, 0.75);
 
-        border: 1px solid rgba(0, 229, 255, 0.12);
+/* ========================================================
+STATUS CARD
+======================================================== */
 
-        margin-top: 15px;
-    }
+.status-card {
+padding: 15px;
 
-    .status-row {
-        display: flex;
-        align-items: center;
-        gap: 9px;
+border-radius: 16px;
 
-        color: #a9b5d0;
+background: rgba(8, 20, 43, 0.75);
 
-        font-size: 13px;
+border: 1px solid rgba(0, 229, 255, 0.12);
 
-        margin: 8px 0;
-    }
+margin-top: 15px;
+}
 
-    .status-dot {
-        width: 8px;
-        height: 8px;
+.status-row {
+display: flex;
+align-items: center;
+gap: 9px;
 
-        border-radius: 50%;
+color: #a9b5d0;
 
-        background: #22c55e;
+font-size: 13px;
 
-        box-shadow:
-            0 0 10px rgba(34, 197, 94, 0.8);
-    }
+margin: 8px 0;
+}
 
+.status-dot {
+width: 8px;
+height: 8px;
 
-    /* ========================================================
-       BUTTONS
-       ======================================================== */
+border-radius: 50%;
 
-    .stButton > button {
-        width: 100%;
+background: #22c55e;
 
-        border-radius: 12px;
+box-shadow:
+0 0 10px rgba(34, 197, 94, 0.8);
+}
 
-        border: 1px solid rgba(0, 229, 255, 0.25);
 
-        background:
-            linear-gradient(
-                135deg,
-                rgba(0, 170, 255, 0.15),
-                rgba(88, 80, 255, 0.15)
-            );
+/* ========================================================
+BUTTONS
+======================================================== */
 
-        color: #dffaff;
+.stButton > button {
+width: 100%;
 
-        font-weight: 650;
+border-radius: 12px;
 
-        min-height: 42px;
+border: 1px solid rgba(0, 229, 255, 0.25);
 
-        transition: all 0.2s ease;
-    }
+background:
+linear-gradient(
+135deg,
+rgba(0, 170, 255, 0.15),
+rgba(88, 80, 255, 0.15)
+);
 
-    .stButton > button:hover {
-        border-color: #00e5ff;
+color: #dffaff;
 
-        box-shadow:
-            0 0 18px rgba(0, 229, 255, 0.18);
+font-weight: 650;
 
-        color: #ffffff;
-    }
+min-height: 42px;
 
+transition: all 0.2s ease;
+}
 
-    /* ========================================================
-       FILE UPLOADER
-       ======================================================== */
+.stButton > button:hover {
+border-color: #00e5ff;
 
-    [data-testid="stFileUploader"] {
-        background: rgba(8, 20, 43, 0.55);
+box-shadow:
+0 0 18px rgba(0, 229, 255, 0.18);
 
-        border-radius: 16px;
-    }
+color: #ffffff;
+}
 
 
-    /* ========================================================
-       CHAT INPUT
-       ======================================================== */
+/* ========================================================
+FILE UPLOADER
+======================================================== */
 
-    [data-testid="stChatInput"] {
-        border-color: rgba(0, 229, 255, 0.25);
-    }
+[data-testid="stFileUploader"] {
+background: rgba(8, 20, 43, 0.55);
 
+border-radius: 16px;
+}
 
-    /* ========================================================
-       SELECTBOX / INPUTS
-       ======================================================== */
 
-    div[data-baseweb="select"] > div {
-        background: rgba(8, 20, 43, 0.70);
+/* ========================================================
+CHAT INPUT
+======================================================== */
 
-        border-color: rgba(120, 160, 255, 0.18);
+[data-testid="stChatInput"] {
+border-color: rgba(0, 229, 255, 0.25);
+}
 
-        border-radius: 12px;
-    }
 
-    input {
-        background: rgba(8, 20, 43, 0.70) !important;
-    }
+/* ========================================================
+SELECTBOX / INPUTS
+======================================================== */
 
+div[data-baseweb="select"] > div {
+background: rgba(8, 20, 43, 0.70);
 
-    /* ========================================================
-       DIVIDER
-       ======================================================== */
+border-color: rgba(120, 160, 255, 0.18);
 
-    hr {
-        border-color: rgba(120, 160, 255, 0.10);
-    }
+border-radius: 12px;
+}
 
+input {
+background: rgba(8, 20, 43, 0.70) !important;
+}
 
-    /* ========================================================
-       MOBILE
-       ======================================================== */
 
-    @media (max-width: 768px) {
+/* ========================================================
+DIVIDER
+======================================================== */
 
-        .block-container {
-            padding: 1rem;
-        }
+hr {
+border-color: rgba(120, 160, 255, 0.10);
+}
 
-        .hero {
-            padding: 22px;
-            border-radius: 18px;
-        }
 
-        .hero-title {
-            font-size: 34px;
-        }
+/* ========================================================
+MOBILE
+======================================================== */
 
-        .hero-subtitle {
-            font-size: 14px;
-        }
+@media (max-width: 768px) {
 
-        .feature-card {
-            margin-bottom: 10px;
-        }
-    }
+.block-container {
+padding: 1rem;
+}
 
-    </style>
-    """,
+.hero {
+padding: 22px;
+border-radius: 18px;
+}
+
+.hero-title {
+font-size: 34px;
+}
+
+.hero-subtitle {
+font-size: 14px;
+}
+
+.feature-card {
+margin-bottom: 10px;
+}
+}
+
+</style>
+""",
     unsafe_allow_html=True,
 )
 
@@ -440,21 +438,20 @@ if "pdf_name" not in st.session_state:
 with st.sidebar:
 
     st.markdown(
-        """
-        <div class="sidebar-logo">
+        """<div class="sidebar-logo">
 
-            <div class="sidebar-logo-icon">🎓</div>
+<div class="sidebar-logo-icon">🎓</div>
 
-            <div class="sidebar-logo-title">
-                Study Tutor AI
-            </div>
+<div class="sidebar-logo-title">
+Study Tutor AI
+</div>
 
-            <div class="sidebar-logo-subtitle">
-                Your intelligent study companion
-            </div>
+<div class="sidebar-logo-subtitle">
+Your intelligent study companion
+</div>
 
-        </div>
-        """,
+</div>
+""",
         unsafe_allow_html=True,
     )
 
@@ -541,21 +538,20 @@ with st.sidebar:
     if message_count:
 
         st.markdown(
-            f"""
-            <div class="status-card">
+            f"""<div class="status-card">
 
-                <div class="status-row">
-                    <span class="status-dot"></span>
-                    {message_count} messages remembered
-                </div>
+<div class="status-row">
+<span class="status-dot"></span>
+{message_count} messages remembered
+</div>
 
-                <div class="status-row">
-                    📄 Study material:
-                    {"Loaded" if st.session_state.study_material else "Not loaded"}
-                </div>
+<div class="status-row">
+📄 Study material:
+{"Loaded" if st.session_state.study_material else "Not loaded"}
+</div>
 
-            </div>
-            """,
+</div>
+""",
             unsafe_allow_html=True,
         )
 
@@ -581,25 +577,24 @@ with st.sidebar:
 # ============================================================
 
 st.markdown(
-    """
-    <div class="hero">
+    """<div class="hero">
 
-        <div class="hero-badge">
-            ✦ AI-POWERED LEARNING
-        </div>
+<div class="hero-badge">
+✦ AI-POWERED LEARNING
+</div>
 
-        <h1 class="hero-title">
-            Study smarter.<br>
-            Understand deeper.
-        </h1>
+<h1 class="hero-title">
+Study smarter.<br>
+Understand deeper.
+</h1>
 
-        <p class="hero-subtitle">
-            Your personal AI tutor for explanations,
-            practice, questions, and learning.
-        </p>
+<p class="hero-subtitle">
+Your personal AI tutor for explanations,
+practice, questions, and learning.
+</p>
 
-    </div>
-    """,
+</div>
+""",
     unsafe_allow_html=True,
 )
 
@@ -613,22 +608,21 @@ col1, col2, col3 = st.columns(3)
 with col1:
 
     st.markdown(
-        """
-        <div class="feature-card">
+        """<div class="feature-card">
 
-            <div class="feature-icon">💡</div>
+<div class="feature-icon">💡</div>
 
-            <div class="feature-title">
-                Understand Concepts
-            </div>
+<div class="feature-title">
+Understand Concepts
+</div>
 
-            <div class="feature-description">
-                Get difficult topics explained
-                in simple, student-friendly language.
-            </div>
+<div class="feature-description">
+Get difficult topics explained
+in simple, student-friendly language.
+</div>
 
-        </div>
-        """,
+</div>
+""",
         unsafe_allow_html=True,
     )
 
@@ -636,22 +630,21 @@ with col1:
 with col2:
 
     st.markdown(
-        """
-        <div class="feature-card">
+        """<div class="feature-card">
 
-            <div class="feature-icon">📚</div>
+<div class="feature-icon">📚</div>
 
-            <div class="feature-title">
-                Learn From Your Notes
-            </div>
+<div class="feature-title">
+Learn From Your Notes
+</div>
 
-            <div class="feature-description">
-                Upload your study material and
-                ask questions about what you're learning.
-            </div>
+<div class="feature-description">
+Upload your study material and
+ask questions about what you're learning.
+</div>
 
-        </div>
-        """,
+</div>
+""",
         unsafe_allow_html=True,
     )
 
@@ -659,22 +652,21 @@ with col2:
 with col3:
 
     st.markdown(
-        """
-        <div class="feature-card">
+        """<div class="feature-card">
 
-            <div class="feature-icon">🧠</div>
+<div class="feature-icon">🧠</div>
 
-            <div class="feature-title">
-                Personalized Tutoring
-            </div>
+<div class="feature-title">
+Personalized Tutoring
+</div>
 
-            <div class="feature-description">
-                Your tutor remembers the current
-                conversation and adapts to your level.
-            </div>
+<div class="feature-description">
+Your tutor remembers the current
+conversation and adapts to your level.
+</div>
 
-        </div>
-        """,
+</div>
+""",
         unsafe_allow_html=True,
     )
 
@@ -818,17 +810,16 @@ Preferred teaching style:
 st.markdown("---")
 
 st.markdown(
-    """
-    <div style="
-        text-align:center;
-        color:#64748b;
-        font-size:12px;
-        padding:15px;
-    ">
+    """<div style="
+text-align:center;
+color:#64748b;
+font-size:12px;
+padding:15px;
+">
 
-        Study Tutor AI • Powered by CrewAI + Groq
+Study Tutor AI • Powered by CrewAI + Groq
 
-    </div>
-    """,
+</div>
+""",
     unsafe_allow_html=True,
 )
