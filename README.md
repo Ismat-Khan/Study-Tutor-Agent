@@ -1,2 +1,28 @@
-# Study-Tutor-Agent
-A smart AI study assistant built with Streamlit, CrewAI, and Groq that helps students understand concepts, ask questions, search study material, and learn interactively with memory and tools.
+# 🎓 Study Tutor Agent
+
+A simple AI Study Tutor built with:
+
+- Streamlit
+- CrewAI
+- Groq
+- GPT-OSS-120B
+- Python
+
+## Features
+
+- Ask questions
+- Upload study PDFs
+- Explain concepts
+- Calculator tool
+- Study material search tool
+- Conversation memory
+
+## Deployment
+
+The application can be deployed using Streamlit cloud.
+
+## Environment Variable
+
+The application requires:
+
+GROQ_API_KEY
