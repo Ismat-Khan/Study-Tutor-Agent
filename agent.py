@@ -1,5 +1,18 @@
 import os
 
+# ============================================================
+# FIX FOR CREWAI + GROQ cache_breakpoint ERROR
+# ============================================================
+
+try:
+    import crewai.llms.cache as crewai_cache
+
+    crewai_cache.mark_cache_breakpoint = lambda msg: msg
+
+except Exception:
+    pass
+
+
 from crewai import Agent, Task, Crew, LLM
 
 from tools import (
@@ -8,8 +21,16 @@ from tools import (
 )
 
 
+# ============================================================
+# MODEL
+# ============================================================
+
 MODEL = "groq/openai/gpt-oss-120b"
 
+
+# ============================================================
+# LLM
+# ============================================================
 
 def create_llm():
 
@@ -19,6 +40,10 @@ def create_llm():
         temperature=0.3,
     )
 
+
+# ============================================================
+# STUDY TUTOR AGENT
+# ============================================================
 
 def create_study_tutor(study_material=""):
 
@@ -60,6 +85,10 @@ def create_study_tutor(study_material=""):
 
     return tutor
 
+
+# ============================================================
+# ASK TUTOR
+# ============================================================
 
 def ask_tutor(
     question,
