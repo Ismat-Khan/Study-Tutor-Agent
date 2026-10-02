@@ -1,5 +1,5 @@
+
 import streamlit as st
-import textwrap
 from pypdf import PdfReader
 
 from agent import ask_tutor
@@ -23,7 +23,7 @@ st.set_page_config(
 # ============================================================
 
 st.markdown(
-    textwrap.dedent("""
+    """
     <style>
 
     /* ========================================================
@@ -414,7 +414,7 @@ st.markdown(
     }
 
     </style>
-    """),
+    """,
     unsafe_allow_html=True,
 )
 
@@ -440,7 +440,7 @@ if "pdf_name" not in st.session_state:
 with st.sidebar:
 
     st.markdown(
-        textwrap.dedent("""
+        """
         <div class="sidebar-logo">
 
             <div class="sidebar-logo-icon">🎓</div>
@@ -454,7 +454,7 @@ with st.sidebar:
             </div>
 
         </div>
-        """),
+        """,
         unsafe_allow_html=True,
     )
 
@@ -541,7 +541,7 @@ with st.sidebar:
     if message_count:
 
         st.markdown(
-            textwrap.dedent(f"""
+            f"""
             <div class="status-card">
 
                 <div class="status-row">
@@ -555,7 +555,7 @@ with st.sidebar:
                 </div>
 
             </div>
-            """),
+            """,
             unsafe_allow_html=True,
         )
 
@@ -581,7 +581,7 @@ with st.sidebar:
 # ============================================================
 
 st.markdown(
-    textwrap.dedent("""
+    """
     <div class="hero">
 
         <div class="hero-badge">
@@ -599,7 +599,7 @@ st.markdown(
         </p>
 
     </div>
-    """),
+    """,
     unsafe_allow_html=True,
 )
 
@@ -613,7 +613,7 @@ col1, col2, col3 = st.columns(3)
 with col1:
 
     st.markdown(
-        textwrap.dedent("""
+        """
         <div class="feature-card">
 
             <div class="feature-icon">💡</div>
@@ -628,7 +628,7 @@ with col1:
             </div>
 
         </div>
-        """),
+        """,
         unsafe_allow_html=True,
     )
 
@@ -636,7 +636,7 @@ with col1:
 with col2:
 
     st.markdown(
-        textwrap.dedent("""
+        """
         <div class="feature-card">
 
             <div class="feature-icon">📚</div>
@@ -651,7 +651,7 @@ with col2:
             </div>
 
         </div>
-        """),
+        """,
         unsafe_allow_html=True,
     )
 
@@ -659,7 +659,7 @@ with col2:
 with col3:
 
     st.markdown(
-        textwrap.dedent("""
+        """
         <div class="feature-card">
 
             <div class="feature-icon">🧠</div>
@@ -674,7 +674,7 @@ with col3:
             </div>
 
         </div>
-        """),
+        """,
         unsafe_allow_html=True,
     )
 
@@ -818,7 +818,7 @@ Preferred teaching style:
 st.markdown("---")
 
 st.markdown(
-    textwrap.dedent("""
+    """
     <div style="
         text-align:center;
         color:#64748b;
@@ -829,6 +829,6 @@ st.markdown(
         Study Tutor AI • Powered by CrewAI + Groq
 
     </div>
-    """),
+    """,
     unsafe_allow_html=True,
 )
