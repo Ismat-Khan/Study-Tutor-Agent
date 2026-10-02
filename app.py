@@ -741,24 +741,13 @@ with st.container(border=True):
 
     if not st.session_state.memory:
 
-        st.markdown(
-            """
-            <div class="empty-chat">
-                <div class="empty-chat-icon">🎓</div>
+        st.markdown("### 🎓 Ready when you are")
 
-                <div class="empty-chat-title">
-                    Ready when you are
-                </div>
-
-                <div class="empty-chat-text">
-                    Ask your first question below.
-                    Your tutor can explain concepts, work through
-                    problems, and use your uploaded study material.
-                </div>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
+st.caption(
+    "Ask your first question below. "
+    "Your tutor can explain concepts, work through "
+    "problems, and use your uploaded study material."
+)
 
     else:
 
