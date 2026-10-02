@@ -1,5 +1,5 @@
 streamlit>=1.40,<2
 crewai>=1.15,<2
 groq>=0.30,<1
-litellm==1.80.7
+litellm>=1,<2
 pypdf>=5,<7
